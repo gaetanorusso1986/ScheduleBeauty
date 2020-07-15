@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+	<ion-toolbar >
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+    <ion-title>LE MIE PRENOTAZIONI</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<ion-list>
+  <ion-button  (click)="openModal(post.Id)"  expand="full" *ngFor="let post of myBookingList" [disabled]="!isExpirationExpired(post)" >
+  
+    <!--    color="!isExpirationExpired(post) ? 'bg-danger' : 'bg-primary'"  convertire l'ora correttamente e colorare di rosso se l'ora è scaduta-->
+    <p>{{ post.DateReservation | date: 'dd/MM/yyyy' }} - {{post.Availability.hour}}</p>
+   
+  
+  </ion-button  >
+</ion-list>
+
+</ion-content>

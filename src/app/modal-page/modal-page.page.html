@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-navbar>
+   
+      <ion-buttons end>
+      <button ion-button (click)="closeModal()"> <ion-icon name="close"></ion-icon><ion-icon ios="ios-close" md="md-close"></ion-icon></button>
+      </ion-buttons>
+      <ion-title></ion-title>
+  </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+  <ion-list>
+    
+    <p>Data: {{ resultDetails.DateReservation | date: 'dd/MM/yyyy' }} - {{resultDetails.Availability.hour}}</p>
+    
+  <ion-button (click)="AnnullaPrenotazione(resultDetails)" >Annulla la prenotazione</ion-button>
+  </ion-list>
+  </ion-content>

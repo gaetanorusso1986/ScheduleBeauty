@@ -1,0 +1,8 @@
+{
+  "name": "ScheduleBeauty", 
+  "integrations": {
+    "cordova": {}
+  },  
+  "type": "angular"
+
+}

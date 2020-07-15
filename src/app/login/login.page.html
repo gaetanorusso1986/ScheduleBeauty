@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (submit)="login()">
+    <ion-list>
+<ion-item>
+  <ion-label>
+    Email
+  </ion-label>
+  <ion-input [(ngModel)]="loginDetails.username" type="text" autocorrect="off" name="username">
+     
+  </ion-input>
+</ion-item>
+<ion-item>
+  <ion-label>
+    Password
+  </ion-label>
+  <ion-input type="password" [(ngModel)]="loginDetails.password" autocorrect="off" name="password">
+     
+  </ion-input>
+</ion-item>
+
+<div padding text-center>
+  <button ion-button color="primary" >Login</button>
+</div>
+    </ion-list>
+    <div padding text-center>
+      <p><a (click)="recovery()">Hai dimenticato la password?</a></p>
+    </div>
+
+    <div padding text-center>
+      <p>Non hai ancora un account? <a (click)="signup()">Creane uno.</a></p>
+    </div>
+
+  </form>
+</ion-content>
