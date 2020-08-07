@@ -1,38 +1,37 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
+	<ion-toolbar >
+		<ion-buttons slot="start" >
+			<ion-menu-button color="dark" autoHide="false"></ion-menu-button>
+		</ion-buttons>
+    <ion-title>Accedi</ion-title>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content>
   <form (submit)="login()">
     <ion-list>
 <ion-item>
-  <ion-label>
-    Email
-  </ion-label>
-  <ion-input [(ngModel)]="loginDetails.username" type="text" autocorrect="off" name="username">
+  <ion-icon name="person-outline"></ion-icon>  
+  <ion-input [(ngModel)]="loginDetails.username" placeholder="Email"  type="text" autocorrect="off" name="username">
      
   </ion-input>
 </ion-item>
 <ion-item>
-  <ion-label>
-    Password
-  </ion-label>
-  <ion-input type="password" [(ngModel)]="loginDetails.password" autocorrect="off" name="password">
+  <ion-icon name="key-outline"></ion-icon>
+  <ion-input type="password" [(ngModel)]="loginDetails.password" placeholder="Password" autocorrect="off" name="password"> 
      
   </ion-input>
 </ion-item>
 
-<div padding text-center>
-  <button ion-button color="primary" >Login</button>
+<div padding  style="text-align: center;">
+  <ion-button type="submit" expand="block" fill="outline" size="large"  color="dark">Login</ion-button>
 </div>
     </ion-list>
-    <div padding text-center>
+    <div padding  style="text-align: center;" >
       <p><a (click)="recovery()">Hai dimenticato la password?</a></p>
     </div>
 
-    <div padding text-center>
+    <div padding  style="text-align: center;">
       <p>Non hai ancora un account? <a (click)="signup()">Creane uno.</a></p>
     </div>
 

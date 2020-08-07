@@ -34,7 +34,16 @@ export class AccountRecoveryPage implements OnInit {
      
     let details = this.userDetails;
     if(!details.hasOwnProperty("email")) {
+      this.loadingCtrl.dismiss();
+      this.alertUtil.presentAlertError("Inserire un'email"); 
       return false;
+    }
+    if(!this.checkMail(details.email))
+    {    
+      this.loadingCtrl.dismiss();
+      this.alertUtil.presentAlertError("Email non corretta"); 
+       return false;
+  
     }
     this.loadingCtrl.present();
 
@@ -61,6 +70,12 @@ export class AccountRecoveryPage implements OnInit {
   back() {
     //this.navCtrl.push(LoginPage);
     this.modal.dismiss();
+  }
+
+  
+  checkMail(email){    
+    var check = /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/;
+    return check.test(email);
   }
 
 }

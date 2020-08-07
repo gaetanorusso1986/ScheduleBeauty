@@ -22,8 +22,8 @@ AddPrenotazione(day, disponibilita, customer,note)
         //da aggiungre uuid
         'Date':day,
         'FK_Availability':disponibilita ,
-        'FK_Customer': customer,
-        'uuid':this.device.version,//this.device.uuid,
+        'FK_User': customer,
+        'uuid':this.device.uuid,//this.device.version,//
         'Note':note
         }
 
@@ -75,7 +75,7 @@ return new Promise((resolve, reject)=>{
 mybooking(customer)
 {
     var model ={ 
-        'FK_Customer': customer,
+        'FK_User': customer,
         'uuid':'83.0.4103.116'//this.device.version//this.device.uuid,    
         }
 
@@ -126,5 +126,31 @@ RemoveBooking(Id)
   
 });
     
+}
+GetAllReservations(service, beauty)
+{
+    var model ={
+        'FK_Service':  service ,
+        'FK_Beauty':beauty
+        };
+        var params = JSON.stringify(model);   
+    return new Promise((resolve, reject)=>{        
+        //this.http.post(Constant.GETALLRESERVATION+"?service="+service+"&beauty="+beauty,{
+
+        var headers= new Headers();         
+        headers.append('Content-Type','application/json; charset=utf-8');
+       this.http.post(Constant.GETALLRESERVATION,params,{
+           headers:headers
+       }).map(res=>res.json()).subscribe(data=>{
+          
+           resolve(data);
+          
+       }, err => {
+         console.log( + err)
+         
+         reject({message: err });
+       });
+  
+});
 }
 }

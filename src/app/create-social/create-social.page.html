@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="backPage()">
+			<ion-icon name="chevron-back-outline"></ion-icon>
+		</ion-buttons>
+    <ion-title>Aggiungi un nuovo social</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ 
+<ion-list>
+  <ion-item>
+    <ion-label>Seleziona il social</ion-label>
+    <ion-select value=""  [(ngModel)]="social" >
+      <ion-select-option value="0">Facebook</ion-select-option>
+      <ion-select-option value="1">Instagram</ion-select-option>
+      <ion-select-option value="2">Linkedin</ion-select-option>
+      <ion-select-option value="3">Twitter</ion-select-option>
+      <ion-select-option value="4">Whatsapp</ion-select-option>
+      <ion-select-option value="6">Pinterest</ion-select-option>
+      <ion-select-option value="7">Youtube</ion-select-option>
+      
+    </ion-select>
+  </ion-item>
+  
+  <ion-item>
+    <ion-input type="text" [(ngModel)]="addsocial.Description" placeholder="Descrizione" autocorrect="off" autocapitalize="none" name="Description"></ion-input>  
+  </ion-item>
+  <div padding>
+    <ion-button type="submit" expand="block" fill="outline" size="large" (click)="Save()" color="dark">Conferma</ion-button>
+  </div>
+</ion-list>
+
+</ion-content>

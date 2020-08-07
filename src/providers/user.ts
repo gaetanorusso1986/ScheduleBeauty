@@ -12,14 +12,16 @@ import * as Constant from '../app/constants';
 import { JsonPipe } from '@angular/common';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 //import { NativeStorage } from '@ionic-native
-
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Injectable()
 export class User {
 
     public user:any;
     public loggedIn : boolean= false;
-    constructor(public config: Config,  public httpClient:HttpClient,public http:Http,public device:Device){
+    constructor(public config: Config,  
+      public httpClient:HttpClient,
+      public http:Http,public device:Device, private nativeStorage: NativeStorage){
             //this.user= null;    
     }
 
@@ -56,6 +58,12 @@ export class User {
                     if(data!=null)
                     {
                     this.user=data;
+                    this.nativeStorage.setItem('user', {property: data})
+                    .then(
+                      () => console.log('Stored item!'),
+                      error => console.error('Error storing item', error)
+                    );
+                    
                     resolve(data);
                     }
                     else
@@ -71,8 +79,9 @@ export class User {
     logout() {
         this.user = null;
         // TODO: disconnect online
+      
       }
-      register(username, password, mail, businessName, vatNumber) {
+      register(username, password, mail, businessName, vatNumber,isChecked) {
     
         if (this.user) {
           return Promise.resolve(this.user);
@@ -80,12 +89,18 @@ export class User {
     
         var cf = '';
         var pi = vatNumber;
-    
-        if (vatNumber.length > 11){
+        var role='';
+      
+        if (vatNumber!=undefined && vatNumber.length > 11){
           cf = vatNumber;
           pi = '';
         }
-    
+        if(isChecked)
+        {
+        role='4C0FAAB8-1123-4BB9-8481-6C577BB77F4D';
+        }
+        else
+        {role='D93D01B3-3F88-4757-AC80-FBFAAC53A9E7';}
         return new Promise((resolve,reject) => {
           var user =  {
               'Firstname' : businessName,
@@ -93,9 +108,10 @@ export class User {
               'Email' : mail,
               'VatNumber' : pi,
               'FiscalCode' : cf,
+              'BussinessName':businessName,
               'Password' : Md5.hashStr(password),
-              'FK_Role':'4C0FAAB8-1123-4BB9-8481-6C577BB77F4D'// <-- ID Beauty
-             // 'FK_Role':'D93D01B3-3F88-4757-AC80-FBFAAC53A9E7'//<-- ID customer
+              'FK_Role':role
+              
               /*"TokenUser": {  
                 'IDDevice': this.device.uuid
               }*/
@@ -106,7 +122,7 @@ export class User {
           console.log(params);
           var headers = new Headers();
           headers.append('Content-Type', 'application/json; charset=utf-8');
-        debugger;
+        
           this.http.post(Constant.REGISTER,
             params, {
                 headers: headers
@@ -119,7 +135,7 @@ export class User {
 
               },
               err => {
-                debugger;
+                
                 console.log( + err)
                 reject({message: err });
               },
@@ -139,18 +155,16 @@ export class User {
           // TODO: vedere se la sessione dell'utente è ancora attiva
           //let user = this.cognito.getCurrentUser();
           let user = this.user;
+          
           if (user != null) {
-            /*user.getSession((err, session) => {
-              if (err) {
-                console.log('rejected session');
-                reject()
-              } else {
-                console.log('accepted session');
-                */
-                //this.user = user;
+            this.nativeStorage.getItem('user')
+            .then(
+            data => user=data,
+            error => console.error(error)
+             );
+            this.user = user;
                 resolve()
-             // }
-           // });
+           
           } else {
             reject()
           }
@@ -163,33 +177,38 @@ export class User {
         //}
     
         return new Promise((resolve,reject) => {
-          var user = { "User" : {
-              'ID' : this.user.ID,
-              'NewPassword' : Md5.hashStr(newPassword),
-              'Password' : Md5.hashStr(oldPassword),          
-              "TokenPack": {  
+         
+          var user = {
+              'Id' : this.user.Id,
+              'Password' : Md5.hashStr(newPassword),
+              'OldPassword' : Md5.hashStr(oldPassword),         
+              /*"TokenPack": {  
                 'IDDevice': this.device.uuid
-              }
-            }
+              }*/
+            
           };
     
-          var params = JSON.stringify({user});
+          var params = user;//JSON.stringify({user});
           console.log(params);
           var headers = new Headers();
           headers.append('Content-Type', 'application/json; charset=utf-8');
-    
+          
           this.http.post(Constant.CHANGE_PASSWORD,
             params, {
                 headers: headers
             })
             .map(res => res.json())
             .subscribe(data => {       
-                if(data.ChangePasswordResult.StatusCode == '200') {
-                  this.user = data;
-                  resolve();
-                } else {
-                  reject({message: data.ChangePasswordResult.ErrorDescription });
-                }
+              console.log( + data)
+                  resolve({message:'Aggiornamento avvenuto con successo'});  
+                },
+                err => {
+                  
+                  console.log( + err)
+                  reject({message: err });
+                },
+                () => {        
+                  return false;
             });
         });
       }
@@ -224,7 +243,7 @@ export class User {
 
               },
               err => {
-                debugger;
+                
                 console.log( + err)
                 reject({message: err });
               },
@@ -233,6 +252,37 @@ export class User {
         
               });
         });
+      }
+
+      updateUser(userUpdate)
+      {     
+        return new Promise((resolve,reject) => {        
+    
+          var params = userUpdate;
+          console.log(params);
+          var headers = new Headers();
+          headers.append('Content-Type', 'application/json; charset=utf-8');
+        
+          this.http.post(Constant.UPDATEUSER,
+            params, {
+                headers: headers
+            })
+            .map(res => res.json())
+            .subscribe(
+              data => {            
+                console.log( + data)
+                  resolve({message:'Aggiornamento avvenuto con successo'});       
+
+              },
+              err => {                
+                console.log( + err)
+                  reject({message: err });
+              },
+              () => {        
+                return false;
+        
+              });
+            });
       }
 
 }

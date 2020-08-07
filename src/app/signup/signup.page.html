@@ -1,49 +1,66 @@
+<ion-header [translucent]="true">
+	<ion-toolbar >
+		<ion-buttons slot="start" >
+			<ion-menu-button color="dark" autoHide="false"></ion-menu-button>
+		</ion-buttons>
+    <ion-title>Registrati</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+
 <ion-content>
-  <div text-center class="logo">
+  <!--<div text-center class="logo">
     <img src="assets/ionic-aws-logo.png" />
-  </div>
+  </div>-->
+
   <form (submit)="signup()">
+
     <p *ngIf="error" style="text-align: center">{{error.message}}</p>
     <ion-list>
-
+ <ion-item >
+      <ion-label>Sei un commerciante?</ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="userDetails.isChecked" name="isChecked"></ion-checkbox>
+    </ion-item>
       <ion-item>
-        <ion-label floating>Username</ion-label>
-        <ion-input type="text" [(ngModel)]="userDetails.username" autocorrect="off" autocapitalize="none" name="username"></ion-input>
+        <ion-icon name="person-outline"></ion-icon>
+        <ion-input type="text" [(ngModel)]="userDetails.username" placeholder="Username" autocorrect="off" autocapitalize="none" name="username"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Email</ion-label>
-        <ion-input type="email" [(ngModel)]="userDetails.email" name="email"></ion-input>
+        <ion-icon name="mail-outline"></ion-icon>
+        <ion-input type="email" placeholder="E-mail" [(ngModel)]="userDetails.email" name="email"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Password</ion-label>
-        <ion-input type="password" [(ngModel)]="userDetails.password" name="password"></ion-input>
+        <ion-icon name="key-outline"></ion-icon>
+        <ion-input type="password" placeholder="Password"  [(ngModel)]="userDetails.password" name="password"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Conferma Password</ion-label>
-        <ion-input type="password" [(ngModel)]="userDetails.confirmPassword" name="confirmPassword"></ion-input>
+        <ion-icon name="key-outline"></ion-icon>
+        <ion-input type="password"  placeholder="Conferma Password" [(ngModel)]="userDetails.confirmPassword" name="confirmPassword"></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-label floating>Azienda</ion-label>
-        <ion-input type="text" [(ngModel)]="userDetails.businessName" name="businessName"></ion-input>
+      <ion-item *ngIf="userDetails.isChecked">
+        <ion-icon name="business-outline"></ion-icon>
+        <ion-input type="text" [(ngModel)]="userDetails.bussinessName" placeholder="Ragione Sociale" name="businessName"></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-label floating>Codice Fiscale/P. IVA</ion-label>
-        <ion-input type="text" [(ngModel)]="userDetails.vatNumber" name="vatNumber" maxlength="16"></ion-input>
+      <ion-item *ngIf="userDetails.isChecked" >
+        <ion-icon name="document-text-outline"></ion-icon>
+        
+        <ion-input type="text" [(ngModel)]="userDetails.vatNumber" placeholder ="Codice Fiscale/P. IVA"  name="vatNumber" maxlength="16"></ion-input>
       </ion-item>
 
       <div padding>
-        <button ion-button color="primary" block>Registra</button>
+        <ion-button type="submit" expand="block" fill="outline" size="large"  color="dark" >Registra</ion-button>
       </div>
-      
-      <div padding text-center>
-        <p><a (click)="login()">Ritorna al login</a>
+      <div padding style="text-align: center;">
+        <p><a (click)="login()">Sei registrato ? Accedi</a>
       </div>
 
     </ion-list>
   </form>
+  
+  
 </ion-content>

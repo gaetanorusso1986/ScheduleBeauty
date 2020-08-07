@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+	<ion-toolbar >
+		<ion-buttons slot="start" (click)="closeModal()">
+			<ion-icon name="chevron-back-outline"></ion-icon>
+		</ion-buttons>
+    <ion-title>Informazioni generali</ion-title>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+  <form (submit)="update()">
+  <ion-list>
+    
+      <ion-item>
+        <ion-icon name="person-outline"></ion-icon>
+        <ion-input type="text" [(ngModel)]="profile.Firstname" placeholder="Nome" autocorrect="off" autocapitalize="none" name="Firstname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="mail-outline"></ion-icon>
+        <ion-input type="email" placeholder="E-mail" [(ngModel)]="profile.Email" name="Email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="call-outline"></ion-icon>
+        <ion-input type="phone" placeholder="Telefono" [(ngModel)]="profile.Phone" name="Phone"></ion-input>
+      </ion-item>
+      
+  </ion-list>
+  <div padding>
+    <ion-button type="submit" expand="block" fill="outline" size="large"  color="dark" >Aggiorna</ion-button>
+  </div>
+</form>
+  <a (click)="UpdatePassword()">Cambia Password</a>
+  
+</ion-content>

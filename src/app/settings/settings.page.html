@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+	<ion-toolbar >
+		<ion-buttons slot="start" >
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+    <ion-title>Impostazioni</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+   
+      <ion-button expand="full"  fill="outline" color="dark" [navPush]="aboutPage">
+        About this app
+      </ion-button>
+ 
+      <ion-button  expand="full" type="submit" color="dark"  fill="outline" (click)="myprofile()"  [navPush]="accountPage">
+        Profilo
+      </ion-button>
+
+      <ion-button *ngIf="this.singleuser.Role.Name=='Beauty'" expand="full" type="submit" color="dark"  fill="outline" (click)="mysocial(this.singleuser)"  [navPush]="accountPage">
+        Social
+      </ion-button>
+      <ion-button  expand="full" *ngIf="this.singleuser.Role.Name=='Beauty'" type="submit" color="dark"  fill="outline" (click)="myservice(this.singleuser)"  [navPush]="accountPage">
+        Service
+      </ion-button>
+   
+      <ion-button expand="full"  fill="outline" color="dark"  (click)="logout()">
+        <ion-icon name="power-outline" color="danger" ></ion-icon>        <ion-label color="danger" >Disconetti</ion-label>
+      </ion-button>
+ 
+</ion-content>
+

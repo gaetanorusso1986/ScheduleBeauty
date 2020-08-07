@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+	<ion-toolbar >
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+    <ion-title>Modifica il profilo</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+ 
+  <ion-list>
+    <label>Informazioni Generali</label> <button style="float: right;" click-stop-propagation ion-button icon-left clear small (click)="EditProfile(profile)">
+      
+      <div>Modifica</div>
+    </button>
+    <ion-item>
+      <ion-icon name="person-outline"></ion-icon>
+     <p>{{profile.Firstname }}</p>
+    </ion-item>
+  <ion-item>
+    <ion-icon name="mail-outline"></ion-icon>
+   <p>{{profile.Email }}</p>
+  </ion-item>
+  <ion-item>
+    <ion-icon name="call-outline"></ion-icon>
+   <p>{{profile.Phone }}</p>
+  </ion-item>
+</ion-list>
+<a (click)="Beauty(profile)">Visualizza la tua attività</a>
+
+</ion-content>

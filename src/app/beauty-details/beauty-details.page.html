@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+  <img [src]="display(beautyDetail.Photo)">
   <ion-item>
     {{beautyDetail.Description}}
   </ion-item>
@@ -15,8 +16,8 @@
     {{beautyDetail.Indirizzo}}
   </ion-item>
   <ion-item>
-    <ion-label>Selzione il servizio da prenotare</ion-label>
-    <ion-select  class="custom-options" (ionChange)="optionsFn();" [(ngModel)]="service">
+    <ion-label>Selezione il servizio da prenotare</ion-label>
+    <ion-select class="custom-options" (ionChange)="optionsFn();" [(ngModel)]="service">
       <ion-select-option  *ngFor="let item of beautyDetail.Service" [value]="item.Id">{{ item.Name }}</ion-select-option>    
     </ion-select>
   </ion-item>

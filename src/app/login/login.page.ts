@@ -5,6 +5,7 @@ import {Injectable} from '@angular/core';
 import { AlertUtil } from '../../app/alertUtil';
 import {LoadingService} from '../LoadingService';
 import {Events} from '../../service/Events'
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 
 export class LoginDetails{
@@ -25,7 +26,8 @@ export class LoginPage implements OnInit {
   constructor(public navCtrl:NavController, public modalCtrl: ModalController, public user:User, 
               public loadingCtrl:LoadingService,
               private alertUtil: AlertUtil,
-              private event: Events) {
+              private event: Events
+             ) {
                 this.loginDetails= new LoginDetails();
                }
 
@@ -44,18 +46,18 @@ if(!details.hasOwnProperty("username") || !details.hasOwnProperty("password")) {
 this.user.login(details.username, details.password).then((result)=>{
 
   console.log(result);
- // this.user=result;
-  debugger;
+  this.user.user=result;
+
   this.event.publish('user:created', result);
 
   this.navCtrl.navigateRoot('home');
 
 }).catch((err)=>{
   
-  var errore = JSON.parse(JSON.stringify( err));
+  var errore = JSON.parse(JSON.stringify( err.message));
 
-  console.log(errore.ExceptionMessage);
-  this.alertUtil.presentAlertError(errore.Message);
+  console.log(errore._body);
+  this.alertUtil.presentAlertError(errore._body);
 
 });
 this.loadingCtrl.dismiss();

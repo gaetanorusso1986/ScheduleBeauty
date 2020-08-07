@@ -6,6 +6,7 @@ import { Device } from '@ionic-native/device/ngx'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import * as Constant from '../app/constants';
+import { debugOutputAstAsTypeScript } from '@angular/compiler';
 
 
 
@@ -20,8 +21,7 @@ export class Beauty {
     }
     
     GetAll()
-    {
-     
+    {   
       
         return new Promise((resolve, reject)=>{        
 

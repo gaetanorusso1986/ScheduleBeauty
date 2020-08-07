@@ -1,7 +1,10 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Recupera Password</ion-title>
-  </ion-navbar>
+	<ion-toolbar >
+		<ion-buttons slot="start" >
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+    <ion-title>Recupera password</ion-title>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -14,18 +17,18 @@
         <ion-input type="text" [(ngModel)]="userDetails.username" autocorrect="off" autocapitalize="none" name="username"></ion-input>
       </ion-item>
   -->
-  <div padding text-center>
+  <div padding style="text-align: center;">
       <p>Inserisci il tuo indirizzo mail. Ti invieremo una comunicazione con le istruzioni per il recupero della password.</p>
     </div>
      
 
       <ion-item>
-        <ion-label floating>Email</ion-label>
-        <ion-input type="email" [(ngModel)]="userDetails.email" name="email"></ion-input>
+        <ion-icon name="mail-outline"></ion-icon>
+        <ion-input type="email"  placeholder="E-mail" [(ngModel)]="userDetails.email" name="email"></ion-input>
       </ion-item>
 
       <div padding>
-        <button ion-button color="primary" block>Conferma</button>
+        <ion-button type="submit" expand="block" fill="outline" size="large"  color="dark">Conferma</ion-button>
       </div>
 
     </ion-list>

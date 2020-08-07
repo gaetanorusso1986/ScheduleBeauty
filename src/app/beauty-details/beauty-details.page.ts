@@ -9,6 +9,7 @@ import {LoadingService} from '../LoadingService';
 import {ActivatedRoute} from '@angular/router';
 import { CalendarComponentOptions } from 'ion2-calendar'
 import * as moment from 'moment';
+import { DomSanitizer } from '@angular/platform-browser';
 
 export class beautyDetails {
   Id: string;
@@ -18,7 +19,8 @@ export class beautyDetails {
   vatNumber: string;
   businessName: string;
   Service: any;
-  
+  Photo:any;
+  displayImage :string;
 }
 @Injectable()
 @Component({
@@ -48,7 +50,8 @@ export class BeautyDetailsPage implements OnInit {
   };
   constructor(public navCtrl:NavController, public modalCtrl: ModalController, public beauty:Beauty, 
     public loadingCtrl:LoadingService, private availability:Availability, public reservations: Reservations,
-    private alertUtil: AlertUtil,public navParams: NavParams,public route:ActivatedRoute) { 
+    private alertUtil: AlertUtil,public navParams: NavParams,public route:ActivatedRoute,
+    private sanitizer: DomSanitizer) { 
       moment.locale('it-it');
     }
 
@@ -69,6 +72,13 @@ export class BeautyDetailsPage implements OnInit {
   this.beauty.GetDetails(id).then((result:beautyDetails)=>{
     
       this.beautyDetail=result;
+      if(this.beautyDetail.Photo!=null)
+      {
+        var imageData = btoa(this.beautyDetail.Photo);
+        //console.log("Base64 Image: ",imageData);
+       // this.beautyDetail.displayImage = this.sanitizer.bypassSecurityTrustUrl("data:image/*;base64,"+imageData);
+
+      }
     console.log(result);
 
    }).catch((err)=>{
@@ -113,10 +123,13 @@ VerficaDisponibilita(){
 });
 
 }
+display(b64: string) {
+  return this.sanitizer.bypassSecurityTrustUrl("data:image/*;base64," + b64);
+}
 Prenota()
 {
   this.resultList=null;
-
+alert(this.availability.device.uuid);
 this.reservations.AddPrenotazione(this.date, this.IdEvent,this.availability.device.uuid,'').then((result)=>{
     
   //il customer da inserire nei parametri si riferisce all'utente loggato

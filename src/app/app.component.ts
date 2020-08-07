@@ -31,12 +31,13 @@ export class AppComponent implements OnInit {
     title: 'Home',
     url: '/home',
     icon: 'archive'
-  },
-  {
+  }
+  ,
+  /*{
     title: 'Registrati',
     url: 'signup',
     icon: 'trash'
-  },
+  },*/
   {
     title: 'Accedi',
     url: 'login',
@@ -48,6 +49,16 @@ export class AppComponent implements OnInit {
     url: './my-booking',
     icon: 'archive'
   }
+ /* {
+    title: 'Prenotazioni Ricevute',
+    url: './reservations-received',
+    icon: 'archive'
+  },
+  {
+    title: 'Impostazioni',
+    url: './settings',
+    icon: 'archive'
+  }*/
 ];
  
     
@@ -62,14 +73,15 @@ export class AppComponent implements OnInit {
     public loading: LoadingService,
     public navParams:NavParams,
     private event: Events ) {
+      
     this.initializeApp();
   }
 
   initializeApp() {
     this.event.subscribe('user:created', (userEventData) => {
-      debugger;
+      
     this.user.user=userEventData;
-
+if(this.user.user!=null){
     if(this.user.user.Role.Name=="Customer")
     {
       this.appPages=[{
@@ -82,26 +94,57 @@ export class AppComponent implements OnInit {
         url: './my-booking',
         icon: 'archive'
       }
+      ,
+    {
+      title: 'Impostazioni',
+      url: './settings',
+      icon: 'archive'
+    }
     ];
     }
-    else if(this.user.user.Role.Name=="Beauty") {
+    else if( this.user.user.Role.Name=="Beauty") {
       this.appPages=[{
         title: 'Home',
         url: '/home',
         icon: 'archive'
-      },         
-      {
-        title: 'Le mie prenotazioni',
-        url: './my-booking',
-        icon: 'archive'
-      },
+      }, 
+      
+       {
+      title: 'Prenotazioni Ricevute',
+    url: './reservations-received',
+    icon: 'archive'
+  },
       {
         title: 'La tua beauty',
         url: './my-booking',
         icon: 'archive'
+      },
+      {
+        title: 'Impostazioni',
+        url: './settings',
+        icon: 'archive'
       }
     ];
 
+    }
+  }
+    else{
+      this.appPages = [{
+        title: 'Home',
+        url: '/home',
+        icon: 'archive'
+      },     
+      {
+        title: 'Accedi',
+        url: 'login',
+        icon: 'archive',
+        role:["admin"]
+      },
+      {
+        title: 'Le mie prenotazioni',
+        url: './my-booking',
+        icon: 'archive'
+      }];
     }
     
 

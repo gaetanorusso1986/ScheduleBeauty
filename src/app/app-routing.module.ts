@@ -39,6 +39,46 @@ const routes: Routes = [
   {
     path: 'modal-page',
     loadChildren: () => import('./modal-page/modal-page.module').then( m => m.ModalPagePageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'reservations-received',
+    loadChildren: () => import('./reservations-received/reservations-received.module').then( m => m.ReservationsReceivedPageModule)
+  },
+  {
+    path: 'myprofile',
+    loadChildren: () => import('./myprofile/myprofile.module').then( m => m.MyprofilePageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'mybeauty',
+    loadChildren: () => import('./mybeauty/mybeauty.module').then( m => m.MybeautyPageModule)
+  },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+  {
+    path: 'changepassword',
+    loadChildren: () => import('./changepassword/changepassword.module').then( m => m.ChangepasswordPageModule)
+  },
+  {
+    path: 'create-social',
+    loadChildren: () => import('./create-social/create-social.module').then( m => m.CreateSocialPageModule)
+  },
+  {
+    path: 'social',
+    loadChildren: () => import('./social/social.module').then( m => m.SocialPageModule)
+  },
+  {
+    path: 'update-social',
+    loadChildren: () => import('./update-social/update-social.module').then( m => m.UpdateSocialPageModule)
   }
 ];
 

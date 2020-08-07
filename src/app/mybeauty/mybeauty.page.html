@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="backPage()">
+			<ion-icon name="chevron-back-outline"></ion-icon>
+		</ion-buttons>
+    <ion-title>{{profile.Name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" slot="fixed">
+  <div class="card">
+    <button style="float: right;" (click)="EditProfile(profile)" click-stop-propagation ion-button icon-left clear small >        
+      <div>Modifica</div>
+    </button>
+    <div class="header">
+      <div class="avatar">
+        <img [src]="display(profile.Photo)">
+      </div>
+      <ion-list>    
+    <ion-item>
+      <ion-icon name="business-outline"></ion-icon>
+      <ion-input type="text" [(ngModel)]="profile.Name" placeholder="Nome" autocorrect="off" autocapitalize="none" name="Name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="navigate-outline"></ion-icon>
+      <ion-input type="text" [(ngModel)]="profile.Indirizzo" placeholder="Nome" autocorrect="off" autocapitalize="none" name="Indirizzo"></ion-input>     
+    </ion-item>
+  <!--<ion-item>
+    <ion-icon name="time-outline"></ion-icon>    
+   <p>{{profile.OpeningHoursWork }}  -  {{profile.ClosingHoursWork}}</p>   
+  </ion-item>-->
+  <ion-item>
+    <ion-icon name="document-text-outline"></ion-icon>
+   <p>{{profile.FiscalCode }}</p>
+  </ion-item>  
+
+  <!--<ion-item *ngIf="profile.Description!=''">
+    <p>{{profile.Description }}</p>
+  </ion-item>-->
+  </ion-list>
+  <div *ngIf="profile.Social?.length > 0" >
+
+    <ion-list>
+      <p>I social</p> 
+  
+
+      <ion-fab vertical="middle" [ngClass]="bg-light" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="AddSocial(profile.Id)">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+<ion-item>
+ 
+</ion-item>      
+      <ion-item *ngFor="let item of profile.Social">
+        <ion-avatar *ngIf="item.Name=='Facebook'" slot="start">
+          <img src="../../assets/fb.jpg" />
+        </ion-avatar>
+        <ion-avatar *ngIf="item.Name=='Instagram'" slot="start">
+          <img src="../../assets/instagram.png" />
+        </ion-avatar>
+        <ion-avatar *ngIf="item.Name=='Whatsapp'" slot="start">
+          <img src="../../assets/wapp.png" />
+        </ion-avatar>
+        <ion-input type="text" [(ngModel)]="item.Description" placeholder="Nome" autocorrect="off" autocapitalize="none"></ion-input>     
+       <button ion-button (click)="RemoveSocial(item.Id)"> <ion-icon  name="trash"></ion-icon></button>
+      </ion-item>
+    </ion-list>
+  
+
+  </div>
+  <div>
+    <ion-button submit >Modifica</ion-button>
+  </div>
+  <div *ngIf="profile.Service?.length > 0" >
+    <ion-button  (click)="DetailsServices(profile.Id)" > 
+      <p> Modifica i servizi </p>
+    </ion-button  >
+
+  </div>
+ 
+</div>
+</div>
+
+</ion-content>

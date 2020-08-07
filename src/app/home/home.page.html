@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
 	<ion-toolbar >
-		<ion-buttons slot="start" (click)="ngOnInit()">
+		<ion-buttons slot="start" >
 			<ion-menu-button autoHide="false"></ion-menu-button>
 		</ion-buttons>
     <ion-title>Home</ion-title>
@@ -10,12 +10,13 @@
 
 <ion-content [fullscreen]="true">
   <ion-searchbar
-    showcancelbutton=""
-    (ionInput)="filterList($event)"
+  (ionClear)="resetChanges()"
+    showcancelbutton="false"
+    (ionInput)="filterItems($event)"
   ></ion-searchbar>
 
   <ion-list >
-    <ion-button  expand="block" fill="outline" size="large" (click)="Details(item.Id)" *ngFor="let item of beautyList">
+    <ion-button  expand="block" color="dark" fill="outline" size="large" (click)="Details(item.Id)" *ngFor="let item of beautyList">
       <ion-label >
         <ion-text >
           <h3>{{ item.Name }}</h3>

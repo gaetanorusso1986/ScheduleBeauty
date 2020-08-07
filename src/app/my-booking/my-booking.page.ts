@@ -8,6 +8,7 @@ import {LoadingService} from '../LoadingService';
 import { ModalPagePage } from '../modal-page/modal-page.page';
 import * as moment from 'moment';
 
+
 @Injectable()
 @Component({
   selector: 'app-my-booking',
@@ -46,7 +47,7 @@ export class MyBookingPage implements OnInit {
 mybooking()
 {
   this.reservations.mybooking(null).then((result)=>{
-    debugger;
+    
     this.myBookingList=result;
     
     
@@ -61,27 +62,11 @@ mybooking()
   });
 
 }
-isExpirationExpired(product) {
- //console.log( moment(product.DateReservation).format('YYYYMMDD'));
+isExpirationExpired(product) { 
   let data = moment().format('YYYYMMDD');
   let dateBooking = moment(product.DateReservation).format('YYYYMMDD');
-//let time = moment().format('HHmmss');
-//console.log('today is: ', data + ' and time: ', time);
-  /*if(dateBooking > data)
-  { 
-    console.log("true");
-    return true;    
-  }
-  else
-  {
-    console.log("false");
-    return false;
-
-  }
-  
-  /*console.log(Date());*/
   console.log(dateBooking>= data);
-return dateBooking>=data;
+  return dateBooking>=data;
 }
 
 }

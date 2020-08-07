@@ -7,8 +7,8 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-<ion-list>
+<ion-content padding>
+<ion-list *ngIf="myBookingList > 0" >
   <ion-button  (click)="openModal(post.Id)"  expand="full" *ngFor="let post of myBookingList" [disabled]="!isExpirationExpired(post)" >
   
     <!--    color="!isExpirationExpired(post) ? 'bg-danger' : 'bg-primary'"  convertire l'ora correttamente e colorare di rosso se l'ora è scaduta-->
@@ -17,5 +17,17 @@
   
   </ion-button  >
 </ion-list>
+<ion-grid *ngIf="myBookingList == 0" style="height: 100%">
+  <ion-row  justify-content-center align-items-center class="centerMsg">
+    <ion-icon ios="ios-thumbs-down" md="md-thumbs-down"></ion-icon>
+    <ion-icon ios-thumbs-down-outline name="thumbs-down-outline" style="zoom:2.0;"></ion-icon>
+    </ion-row>
+  <ion-row  justify-content-center align-items-center  class="centerMsg">
+    
+      Nessuna prenotazione trovata!
+    </ion-row>
+  </ion-grid>
+
+
 
 </ion-content>

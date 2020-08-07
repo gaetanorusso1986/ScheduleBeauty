@@ -15,12 +15,16 @@ import {User} from '../providers/user';
 import {Beauty} from '../providers/beauty';
 import {Availability} from  '../providers/Availability';
 import {Reservations} from  '../providers/Reservations';
+import {Social} from  '../providers/Social';
 import { Device } from '@ionic-native/device/ngx'
 import { AlertUtil} from '../app/alertUtil';
 import {LoadingService} from '../app/LoadingService';
-
+import { MybeautyPage } from '../app/mybeauty/mybeauty.page';
+import { SocialPage } from '../app/social/social.page';
 import localeIt from '@angular/common/locales/it';
 import { registerLocaleData } from '@angular/common';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import {Location} from '@angular/common';
 registerLocaleData(localeIt);
 
 @NgModule({
@@ -34,7 +38,9 @@ registerLocaleData(localeIt);
     AppRoutingModule
   ],
   providers: [
-   
+    SocialPage,
+    MybeautyPage,
+    Location,
     StatusBar,
     NavParams,
     SplashScreen,
@@ -45,6 +51,8 @@ registerLocaleData(localeIt);
     Availability,
     Reservations,
     Beauty,
+    Social,
+    NativeStorage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: "it-IT" },
   ],

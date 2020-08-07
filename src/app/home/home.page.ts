@@ -17,6 +17,7 @@ import {LoadingService} from '../LoadingService';
 
 export class HomePage implements OnInit {
   public beautyList: any;
+  public defaultList: any;
   public selectedLeave;
   constructor(public navCtrl:NavController, public modalCtrl: ModalController, public beauty:Beauty, 
     public loadingCtrl:LoadingService,
@@ -38,22 +39,28 @@ this.selectedLeave='';
     this.beauty.GetAll().then((result)=>{
       
       this.beautyList=result;
+      this.defaultList=result;
       console.log(result);
     }).catch((err)=>{
     
       var errore = JSON.parse(JSON.stringify( err));
     
       console.log(errore.ExceptionMessage);
-      this.alertUtil.presentAlertError(errore.Message);
+      this.alertUtil.presentAlertError(err);
     
     });
   }
   
   filterItems(searchTerm) {
-    return this.beautyList.filter(item => {
-      return item.Name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+    this.resetChanges();
+    
+    this.beautyList= this.beautyList.filter(item => {
+      return item.Name.toLowerCase().indexOf(searchTerm.target.value.toLowerCase()) > -1;
     });
   }
+  protected resetChanges = () => {
+    this.beautyList = this.defaultList;
+};
   Details(id)
   {
 
@@ -61,7 +68,7 @@ this.selectedLeave='';
       
       this.navCtrl.navigateRoot(["beauty-details",{
          id: id
-        }]);;
+        }]);
     //  this.navCtrl.navigateRoot("/signup");
 
      }).catch((err)=>{

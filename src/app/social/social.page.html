@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="backPage()">
+			<ion-icon name="chevron-back-outline"></ion-icon>
+		</ion-buttons>
+    <ion-title>social</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="middle" [ngClass]="bg-light" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="AddSocial()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <div *ngIf="social?.length > 0" >
+    <ion-list>
+      <ion-item> 
+      </ion-item>      
+      <ion-item *ngFor="let item of social">
+        <ion-avatar *ngIf="item.Name=='Facebook'" slot="start">
+          <img src="../../assets/fb.jpg" />
+        </ion-avatar>
+        <ion-avatar *ngIf="item.Name=='Instagram'" slot="start">
+          <img src="../../assets/instagram.png" />
+        </ion-avatar>
+        <ion-avatar *ngIf="item.Name=='Whatsapp'" slot="start">
+          <img src="../../assets/wapp.png" />
+        </ion-avatar>
+        <ion-input type="text" [(ngModel)]="item.Description" placeholder="Nome" autocorrect="off" autocapitalize="none"></ion-input>     
+        <button ion-button clear (click)="updateTask(item)">
+          <ion-icon name="create"></ion-icon>
+        </button>     
+        <button ion-button (click)="RemoveSocial(item)"> <ion-icon  name="trash"></ion-icon></button>
+      </ion-item>
+    </ion-list>
+  
+
+  </div>
+  <div *ngIf="social?.length ==0" >
+    <ion-grid  style="height: 100%">
+    <ion-row  justify-content-center align-items-center  class="centerMsg">
+    
+      Non ci sono sociale
+    </ion-row>
+  </ion-grid>
+
+  </div>
+
+</ion-content>
