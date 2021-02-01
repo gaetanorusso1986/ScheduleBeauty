@@ -22,7 +22,7 @@ export class SocialPage implements OnInit {
 
 let fk_beauty= this.user.user.FK_Beauty;
 this.getAll(fk_beauty);
-  console.log("social " + this.social);
+  
     
   }
   ionViewWillEnter() {
@@ -43,8 +43,7 @@ this.getAll(fk_beauty);
 
   dismiss(fk)
   {
-    //this.ngOnInit();
-     // this.getAll(fk)
+    
       this.modalCtrl.dismiss();         
       this.navCtrl.navigateRoot("/settings");
     
@@ -60,7 +59,7 @@ this.getAll(fk_beauty);
     let p = item;
     this.alertUtil.presentConfirmRemove().then(res => {
     this.soc.remove(item.Id).then((success:any)=>{
-      debugger;
+    
       let index: number =this.deepIndexOf(this.social,item);
             if(index > -1){
           this.social.splice(index, 1);
@@ -72,8 +71,13 @@ this.getAll(fk_beauty);
     
     
   }).catch((err)=>{
+
   
-  alert(err);
+   
+    var errore = JSON.parse(JSON.stringify( err.message));
+
+    console.log(errore._body);
+    this.alertUtil.presentAlertError(errore._body);    
   });
   });
   
@@ -96,6 +100,11 @@ this.getAll(fk_beauty);
         
       this.social=result;
       }).catch((err)=>{
+        
+        var errore = JSON.parse(JSON.stringify( err.message));
+  
+        console.log(errore._body);
+        this.alertUtil.presentAlertError(errore._body);    
 
       });
 

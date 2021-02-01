@@ -34,6 +34,17 @@ export class SettingsPage implements OnInit {
     }
     //this.app.getRootNav().setRoot(LoginPage);
   }
+  mybeauty(profile){
+    
+    if(profile.beauty==null)
+    { this.navCtrl.navigateRoot("mybeauty");}
+    else{
+    this.navCtrl.navigateRoot(["mybeauty",{
+      idbeauty: JSON.stringify(profile.beauty.Id)
+     }]);
+    }
+      console.log(profile.Beauty);
+  }
 
 
   myprofile(){
@@ -45,7 +56,11 @@ this.navCtrl.navigateRoot("/profile");
     this.navCtrl.navigateRoot("/social");
   }
   myservice(user){
+    this.navCtrl.navigateRoot("/service");
 
+  }
+  myholidays(user){
+    this.navCtrl.navigateRoot("/holidays");
 
   }
 

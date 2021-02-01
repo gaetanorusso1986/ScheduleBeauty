@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-	<ion-toolbar >
+	<ion-toolbar mode="md|ios" color="reservation">
 		<ion-buttons slot="start">
 			<ion-menu-button autoHide="false"></ion-menu-button>
 		</ion-buttons>
@@ -8,36 +8,42 @@
 </ion-header>
 
 <ion-content>
-  <img [src]="display(beautyDetail.Photo)">
-  <ion-item>
-    {{beautyDetail.Description}}
-  </ion-item>
-  <ion-item>
-    {{beautyDetail.Indirizzo}}
-  </ion-item>
-  <ion-item>
-    <ion-label>Selezione il servizio da prenotare</ion-label>
-    <ion-select class="custom-options" (ionChange)="optionsFn();" [(ngModel)]="service">
-      <ion-select-option  *ngFor="let item of beautyDetail.Service" [value]="item.Id">{{ item.Name }}</ion-select-option>    
-    </ion-select>
-  </ion-item>
-  <ion-calendar [(ngModel)]="date"
-  (change)="onChange($event)"
-  [options]="optionsRange"
-  [type]="type"  
-  [format]="'YYYY-MM-DD'">
-</ion-calendar>
-<ion-button expand="full" fill="solid" (click)="VerficaDisponibilita()">Verifica la disponibilità</ion-button>
-
-
-<ion-grid >
-<ion-row>
-  <ion-col  col-33 *ngFor="let post of resultList; let i=index"   >
-    <button ion-button block  [disabled]="post.worstations <= 0"  (click)="addEvent(i, $event)"  
-    [ngClass]="buttonValue ===  i ? 'bg-primary' : 'bg-light'"   value="{{post.Id}}">{{post.hour}}</button>
-   </ion-col>
-</ion-row>
-</ion-grid> 
-<ion-button *ngIf="enabledPrenota===1" expand="full" fill="solid" (click)="Prenota()">Prenota</ion-button>
-
+  <div style="padding: 25px;">
+    <img *ngIf="beautyDetail.Photo" width="180" height="180" class="imgstyle" [src]="display(beautyDetail.Photo)">    
+    <img *ngIf="!beautyDetail.Photo" width="180" height="180" class="imgstyle" src="../../assets/logoBarbiere.png" />
+  </div>
+  
+  <ion-list>
+    <ion-item>
+      {{beautyDetail.Description}}
+    </ion-item>
+    <ion-item>
+      <ion-icon name="location-outline"></ion-icon>
+      {{beautyDetail.Indirizzo}}
+    </ion-item>
+    <ion-item>
+      <ion-icon name="document-text-outline"></ion-icon>
+      {{beautyDetail.FiscalCode}}
+    </ion-item>
+   </ion-list> 
+   <ion-row style="height: 10px"></ion-row>  
+   <div class="ion-text-center">
+    <h3>Orari di apertura</h3>    
+  </div>
+   <ion-list >
+     <ion-item *ngFor="let hour of beautyDetail.hours" style="height: 35px;">
+      <p >
+        {{hour}}        
+      </p>
+     </ion-item>
+   </ion-list>
+ 
 </ion-content>
+<ion-footer>
+  <p>
+
+    <ion-button *ngIf="beautyDetail.isActive" expand="full" class="shadow-red" shape="round" color="danger" type="submit" size="large"  (click)="Update(beautyDetail)">Disattiva</ion-button> 
+    <ion-button *ngIf="!beautyDetail.isActive" expand="full" class="shadow-red" shape="round" color="success" type="submit"  size="large"  (click)="Update(beautyDetail)">Attiva</ion-button> 
+    </p>
+</ion-footer>
+

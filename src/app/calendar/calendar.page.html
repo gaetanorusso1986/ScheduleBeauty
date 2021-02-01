@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="reservation">
+    <ion-buttons slot="start" (click)="BackPage()">
+			<ion-icon name="chevron-back-outline"></ion-icon>
+		</ion-buttons>
+    <ion-title style="text-align: center;">Scegli il giorno</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    
+    
+    <ion-datetime displayFormat="DDDD, DD MMM YYYY" (ionChange)="updateMyDate(today)" pickerFormat="YYYY MMM DD"  max="2030-12-31" [(ngModel)]="today" 
+    monthShortNames='Gennaio, Febbraio, Marzo, Aprile, Maggio, Giugno, Luglio, Agosto, Settembre, 
+    Ottobre, Novembre, Dicembre' dayNames='Domenica,Lunedì,Martedì,Mercoledì,Giovedì,Venerdì,Sabato' doneText="Ok" cancelText="Annulla"></ion-datetime>
+  </ion-item>
+  <div *ngIf='hours_list.length > 0' style= 'max-height: 350px; overflow-y: scroll;'>
+  
+    <ion-list >
+    <ion-item *ngFor='let hour of hours_list; let i=index'>
+      <ion-label>{{hour.Hour}}</ion-label>
+      <ion-checkbox [(ngModel)]='hour.checked'  (click)='selection(hour.Hour)'>{{hour.Hour}}</ion-checkbox>
+    </ion-item>
+  </ion-list>
+  </div>
+    <ion-item *ngIf='hours_list.length > 0'>
+      <ion-label>Nota: </ion-label>
+      <ion-textarea rows="6" cols="20" [(ngModel)]="nota" placeholder="Inserisci una nota..."></ion-textarea>
+    </ion-item>
+    <ion-row *ngIf='hours_list.length == 0'  class="label_Section">
+      <ion-col text-center>
+        <ion-label class="msg_alert">Non ci sono disponibilità per questo giorno!</ion-label>
+      </ion-col>
+    </ion-row>
+
+
+
+
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+  <ion-button *ngIf='hours_list.length > 0' expand="full" class="shadow-red" shape="round" color="reservation" type="submit"  size="large"  (click)="Prenota()">Prenota</ion-button> 
+</ion-toolbar>
+</ion-footer>

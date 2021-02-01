@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar color="reservation">
+    <ion-buttons slot="start" (click)="BackPage()">
+			<ion-icon name="chevron-back-outline"></ion-icon>
+		</ion-buttons>
+    <ion-title style="text-align: center;"> Scegli la poltrona</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size="1">
+      <span class="slider-nav arrow-prev"
+        (click)="slidePrev(sliderOne,slideWithNav)">
+        <div class="prev-icon-custom custon-nav"
+          [class.disabled]="sliderOne.isBeginningSlide">
+          <ion-icon name="arrow-back"></ion-icon></div>
+      </span>
+    </ion-col>
+    <ion-col size="10">
+  
+      <ion-slides  [options]="slideOptsOne" #slideWithNav
+        (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
+        <ion-slide *ngFor="let s of sliderOne.slidesItems">
+        
+          <ion-card class="myCard">
+            <img src="../../assets/operatore.jpg" class="new-collection"/> 
+              <div class="myOverlay">
+                <div class="card-title" style="font-size: 30px;">{{ s.Name }}</div>
+                <div class="card-subtitle"></div>
+              </div>
+           </ion-card>
+        </ion-slide>
+        
+      </ion-slides>
+  
+    </ion-col>
+    <ion-col size="1">
+      <span class="slider-nav arrow-next"
+        (click)="slideNext(sliderOne,slideWithNav)">
+        <div class="next-icon-custom custon-nav"
+          [class.disabled]="sliderOne.isEndSlide">
+          <ion-icon name="arrow-forward"></ion-icon></div>
+      </span>
+    </ion-col>
+  </ion-row>
+  <io-row>
+    
+  </io-row>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="full" class="shadow-red" shape="round" color="reservation" type="submit"  size="large"  (click)="NextPrenota()">Avanti</ion-button> 
+</ion-toolbar>
+</ion-footer>

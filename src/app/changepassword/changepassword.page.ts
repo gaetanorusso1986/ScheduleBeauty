@@ -65,21 +65,19 @@ export class ChangepasswordPage implements OnInit {
   loading.present();
 
     
-    console.log('change Password');
+    
     this.user.changePassword(details.oldPassword, details.newPassword).then((result) => {      
-      console.log('result:', result);
+      
       this.alertUtil.presentAlert("Password modificata con successo. Effettua il login");
       loading.dismiss();
       this.navCtrl.navigateRoot("/login");
     }).catch((err) => {  
-      debugger;     
-      if (err.message != "") {
-          {
-            console.log('error', err.message);
-            this.alertUtil.presentAlertError(JSON.parse(err.message._body).ExceptionMessage);
-            loading.dismiss();
-          }
-      }      
+      var errore = JSON.parse(JSON.stringify( err.message));
+
+      console.log(errore._body);
+      this.alertUtil.presentAlertError(errore._body);
+      this.loadingCtrl.dismiss();    
+         
     });
   }
 

@@ -5,6 +5,7 @@ import {Injectable} from '@angular/core';
 import { AlertUtil } from '../../app/alertUtil';
 import {ActivatedRoute} from '@angular/router';
 import {LoadingService} from '../LoadingService';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 
@@ -22,7 +23,7 @@ export class HomePage implements OnInit {
   constructor(public navCtrl:NavController, public modalCtrl: ModalController, public beauty:Beauty, 
     public loadingCtrl:LoadingService,
     private alertUtil: AlertUtil,
-    public route:ActivatedRoute) {
+    public route:ActivatedRoute, private sanitizer: DomSanitizer) {
       
      }
 
@@ -30,55 +31,59 @@ export class HomePage implements OnInit {
 
 this.selectedLeave='';
   this.getAllBeauty();
+
   }
 
 
   getAllBeauty()
   {
 
+    
+    //this.loadingCtrl.present();
     this.beauty.GetAll().then((result)=>{
       
-      this.beautyList=result;
-      this.defaultList=result;
+      //this.beautyList=result;
       console.log(result);
+      this.defaultList=result;      
+      //this.loadingCtrl.dismiss();
     }).catch((err)=>{
-    
-      var errore = JSON.parse(JSON.stringify( err));
-    
-      console.log(errore.ExceptionMessage);
-      this.alertUtil.presentAlertError(err);
-    
+      //this.loadingCtrl.dismiss();
+      var errore = JSON.parse(JSON.stringify( err));  
+       this.alertUtil.presentAlertError("Impossibile visualizzare la lista dei barbieri, riprova più tardi");
+
+    }).finally(()=>{
+      
+      this.loadingCtrl.dismiss();
+
     });
   }
   
   filterItems(searchTerm) {
-    this.resetChanges();
     
-    this.beautyList= this.beautyList.filter(item => {
+    this.resetChanges();
+    if (!searchTerm) {
+      return;
+    }
+    
+    this.beautyList= this.defaultList.filter(item => {
+      
+      if (item.Name && searchTerm) {
+        
       return item.Name.toLowerCase().indexOf(searchTerm.target.value.toLowerCase()) > -1;
+      }
     });
   }
   protected resetChanges = () => {
-    this.beautyList = this.defaultList;
-};
-  Details(id)
-  {
 
-     this.beauty.GetDetails(id).then((result)=>{
-      
-      this.navCtrl.navigateRoot(["beauty-details",{
+    this.beautyList = [];
+};
+display(b64: string) {
+  return this.sanitizer.bypassSecurityTrustUrl("data:image/*;base64," + b64);
+}
+  Details(id)
+  {         
+      this.navCtrl.navigateRoot(["prenotazione",{
          id: id
         }]);
-    //  this.navCtrl.navigateRoot("/signup");
-
-     }).catch((err)=>{
-    
-      var errore = JSON.parse(JSON.stringify( err));
-    
-      console.log(errore.ExceptionMessage);
-      this.alertUtil.presentAlertError(errore.Message);
-    
-    });
-
   }
 }

@@ -1,21 +1,18 @@
 <ion-header>
-
-  <ion-navbar>
-   
-      <ion-buttons end>
-      <button ion-button (click)="closeModal()"> <ion-icon name="close"></ion-icon><ion-icon ios="ios-close" md="md-close"></ion-icon></button>
+  <ion-toolbar>      
+      <ion-buttons slot="start" (click)="closeModal()">
+        <ion-icon name="close"></ion-icon><ion-icon ios="ios-close" md="md-close"></ion-icon>
       </ion-buttons>
-      <ion-title></ion-title>
-  </ion-navbar>
-  
-  </ion-header>
-  
-  
-  <ion-content padding>
-  <ion-list>
+      <div text-center>
+      <ion-title >Annulla la prenotazione</ion-title>
+    </div>
+  </ion-toolbar>  
+  </ion-header>  
+    <ion-content padding>
+  <ion-list >
     
-    <p>Data: {{ resultDetails.DateReservation | date: 'dd/MM/yyyy' }} - {{resultDetails.Availability.hour}}</p>
+    <p>Data: {{ resultDetails.DateReservation | date: 'dd/MM/yyyy' }} - {{resultDetails.Disponibilita.Hour}}</p>
     
-  <ion-button (click)="AnnullaPrenotazione(resultDetails)" >Annulla la prenotazione</ion-button>
+  <ion-button (click)="AnnullaPrenotazione(resultDetails)" color="dark" type="submit" expand="block" fill="outline" >Conferma</ion-button>
   </ion-list>
   </ion-content>

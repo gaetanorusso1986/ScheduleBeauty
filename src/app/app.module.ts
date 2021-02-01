@@ -15,7 +15,10 @@ import {User} from '../providers/user';
 import {Beauty} from '../providers/beauty';
 import {Availability} from  '../providers/Availability';
 import {Reservations} from  '../providers/Reservations';
+import {Holidays} from '../providers/Holidays';
 import {Social} from  '../providers/Social';
+import {Service} from  '../providers/Service';
+import {Operators} from  '../providers/Operators';
 import { Device } from '@ionic-native/device/ngx'
 import { AlertUtil} from '../app/alertUtil';
 import {LoadingService} from '../app/LoadingService';
@@ -25,6 +28,8 @@ import localeIt from '@angular/common/locales/it';
 import { registerLocaleData } from '@angular/common';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import {Location} from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Camera } from '@ionic-native/camera/ngx';
 registerLocaleData(localeIt);
 
 @NgModule({
@@ -32,13 +37,15 @@ registerLocaleData(localeIt);
   entryComponents: [],
   imports: [
     BrowserModule,
-    HttpModule,
+    FormsModule,
+    HttpModule,    
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule
   ],
   providers: [
     SocialPage,
+    
     MybeautyPage,
     Location,
     StatusBar,
@@ -51,8 +58,12 @@ registerLocaleData(localeIt);
     Availability,
     Reservations,
     Beauty,
+    Service,
     Social,
+    Operators,
+    Holidays,
     NativeStorage,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: "it-IT" },
   ],

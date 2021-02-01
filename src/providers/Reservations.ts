@@ -15,33 +15,29 @@ export class Reservations {
     constructor(public config: Config,  public httpClient:HttpClient,public http:Http,public device:Device){
         this.reservations= null;    
 }
-AddPrenotazione(day, disponibilita, customer,note)
-{
-
-    var model ={    
-        //da aggiungre uuid
-        'Date':day,
+AddPrenotazione(day, disponibilita, FK_Service,FK_Operator,customer,note,hour)
+{   
+    var model ={            
+        'DateReservation':day,
         'FK_Availability':disponibilita ,
+        'FK_Service_Beauty': FK_Service,
+        'FK_Operator':FK_Operator,
         'FK_User': customer,
         'uuid':this.device.uuid,//this.device.version,//
-        'Note':note
+        'Note':note,
+        'hour':hour
         }
 
-var params = JSON.stringify(model);   
-    return new Promise((resolve, reject)=>{        
-
-
+    var params = JSON.stringify(model);   
+        return new Promise((resolve, reject)=>{       
         var headers= new Headers();         
         headers.append('Content-Type','application/json; charset=utf-8');
-       this.http.post(Constant.RESERVATIONS_SERVICE,params,{
+        this.http.post(Constant.RESERVATIONS_SERVICE,params,{
            headers:headers
-       }).map(res=>res.json()).subscribe(data=>{
-          
-           resolve(data);
-          
-       }, err => {
-         console.log( + err)
-         
+         }).map(res=>res.text()).subscribe(data=>{          
+           resolve(data);          
+        }, err => {
+         console.log( + err)         
          reject({message: err });
        });
   
@@ -76,7 +72,7 @@ mybooking(customer)
 {
     var model ={ 
         'FK_User': customer,
-        'uuid':'83.0.4103.116'//this.device.version//this.device.uuid,    
+        'uuid':this.device.uuid,    
         }
 
 var params = JSON.stringify(model);   
@@ -127,11 +123,13 @@ RemoveBooking(Id)
 });
     
 }
-GetAllReservations(service, beauty)
+GetAllReservations(service, beauty,date)
 {
     var model ={
         'FK_Service':  service ,
-        'FK_Beauty':beauty
+        'FK_Beauty':beauty,
+        'DateReservation':date
+
         };
         var params = JSON.stringify(model);   
     return new Promise((resolve, reject)=>{        

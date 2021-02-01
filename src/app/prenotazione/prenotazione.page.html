@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+	<ion-toolbar mode="md|ios" color="reservation">
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>
+		</ion-buttons>
+    <ion-title style="text-align: center;">{{beautyDetail.Name}}</ion-title>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+  <div style="padding: 25px;">
+    <img *ngIf="beautyDetail.Photo" width="180" height="180" class="imgstyle" [src]="display(beautyDetail.Photo)">    
+    <img *ngIf="!beautyDetail.Photo" width="180" height="180" class="imgstyle" src="../../assets/logoBarbiere.png" />
+  </div>
+  
+  <ion-list>
+    <!-- <ion-fab vertical="center" horizontal="start" slot="fixed">
+      <ion-fab-button (click)="openMapsApp(beautyDetail.Indirizzo)">
+        <ion-icon name="share"></ion-icon>
+      </ion-fab-button>
+    </ion-fab> -->
+    <ion-item>
+      {{beautyDetail.Description}}
+    </ion-item>
+    <ion-item>
+      <ion-icon name="location-outline"></ion-icon>
+      {{beautyDetail.Indirizzo}} - {{beautyDetail.Citta}}
+    </ion-item>
+    <!-- <ion-item>
+      <ion-icon name="document-text-outline"></ion-icon>
+      {{beautyDetail.FiscalCode}}
+    </ion-item> -->
+   </ion-list> 
+   <div class="ion-text-center">
+    <h3>Orari di apertura</h3>    
+  </div>
+   <ion-list>
+     <ion-item *ngFor="let hour of beautyDetail.hours">
+      <p >
+        {{hour}}
+      </p>
+     </ion-item>
+   </ion-list>
+   <p>
+    
+  </p>
+</ion-content>
+<ion-footer>
+  <ion-button expand="full" class="shadow-red" shape="round" color="reservation" type="submit"  size="large"  (click)="Prenota(beautyDetail)">Prenota</ion-button> 
+</ion-footer>

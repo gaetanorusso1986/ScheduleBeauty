@@ -1,5 +1,5 @@
 <ion-header>
-	<ion-toolbar >
+	<ion-toolbar  color="reservation">
 		<ion-buttons slot="start" >
 			<ion-menu-button autoHide="false"></ion-menu-button>
 		</ion-buttons>
@@ -26,9 +26,9 @@
         <ion-icon name="mail-outline"></ion-icon>
         <ion-input type="email"  placeholder="E-mail" [(ngModel)]="userDetails.email" name="email"></ion-input>
       </ion-item>
-
+<br/>
       <div padding>
-        <ion-button type="submit" expand="block" fill="outline" size="large"  color="dark">Conferma</ion-button>
+        <ion-button type="submit" shape="round"  expand="block" size="large"  color="reservation">Conferma</ion-button>
       </div>
 
     </ion-list>

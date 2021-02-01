@@ -1,5 +1,5 @@
 <ion-header>
-	<ion-toolbar >
+	<ion-toolbar  color="reservation">
 		<ion-buttons slot="start" >
 			<ion-menu-button autoHide="false"></ion-menu-button>
 		</ion-buttons>
@@ -8,16 +8,37 @@
 </ion-header>
 
 <ion-content>
+	
+	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content
+		  pullingIcon="chevron-down-circle-outline"
+		  pullingText="Pull to refresh"
+		  refreshingSpinner="circles"
+		  refreshingText="Verifico nuove prenotazioni..."></ion-refresher-content>
+		</ion-refresher>
 	<ion-item>	
-		<ion-select  class="custom-options" (ionChange)="optionsFn();" [(ngModel)]="service">
-			<!--<ion-select-option  *ngFor="let item of beautyDetail.Service" [value]="item.Id">{{ item.Name }}</ion-select-option>    -->
-		  </ion-select>
-		<ion-datetime displayFormat="DD-MM-YYYY" placeholder="Ricerca per data"></ion-datetime>
+		<!-- <ion-select  class="custom-options" (ionChange)="optionsFn();" [(ngModel)]="service">
+			<ion-select-option  *ngFor="let item of beautyDetail.Service" [value]="item.Id">{{ item.Name }}</ion-select-option>   
+		  </ion-select> -->
+		  <ion-label color="dark">Ricerca per data</ion-label>
+		  <ion-datetime displayFormat="DD-MM-YYYY" [(ngModel)]="mydate" (ionChange)="optionsFn();"placeholder="Ricerca per data"></ion-datetime>
 	  </ion-item>
+	  
+<div style="text-align: center;" *ngIf="listReservatsion.length > 0">
+	<p >Numero di prenotazione di oggi: <ion-label color="success">{{listReservatsion.length}}</ion-label></p>
+	</div>
 	<ion-list>
-	<ion-item  *ngFor="let item of listReservatsion">
-		<p>{{ item.DateReservation | date: 'dd/MM/yyyy' }} - {{item.Hour}}</p>
+
+	<ion-item  slot="end" *ngFor="let item of listReservatsion">
+		<ion-label color="primary">{{item.hour}}</ion-label>
+		<p style="text-align: center;">  {{item.NameService}}</p>
 		
 	</ion-item>
 </ion-list>
+<ion-grid *ngIf="listReservatsion.length == 0" style="height: 100%">
+	<ion-row  justify-content-center align-items-center  class="centerMsg">
+	  Non ci sono prenotazioni per oggi
+		
+	  </ion-row>
+	</ion-grid>
 </ion-content>

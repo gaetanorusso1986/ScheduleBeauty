@@ -13,6 +13,7 @@ import { JsonPipe } from '@angular/common';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 //import { NativeStorage } from '@ionic-native
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { rejects } from 'assert';
 
 @Injectable()
 export class User {
@@ -39,12 +40,12 @@ export class User {
         }
       
         return new Promise((resolve, reject)=>{
+           
             var user ={
-                    'Email':username,
-                    'Password': Md5.hashStr(password)
-                    //'Token':this.device.uuid //<--- Gestion Token da implementare
-            }
-
+              'Email':username,
+              'Password': Md5.hashStr(password)
+              //'Token':this.device.uuid //<--- Gestion Token da implementare
+      };
            var params = JSON.stringify(user);        
             console.log(params);      
         
@@ -58,6 +59,7 @@ export class User {
                     if(data!=null)
                     {
                     this.user=data;
+                    console.log("User" + data);
                     this.nativeStorage.setItem('user', {property: data})
                     .then(
                       () => console.log('Stored item!'),
@@ -97,10 +99,10 @@ export class User {
         }
         if(isChecked)
         {
-        role='4C0FAAB8-1123-4BB9-8481-6C577BB77F4D';
+        role='31FDD82C-F51D-4B42-9BCC-6B68B9466BCF';
         }
         else
-        {role='D93D01B3-3F88-4757-AC80-FBFAAC53A9E7';}
+        {role='331726A4-B1BE-422A-ACBA-F775078C6CEA';}
         return new Promise((resolve,reject) => {
           var user =  {
               'Firstname' : businessName,
@@ -163,7 +165,7 @@ export class User {
             error => console.error(error)
              );
             this.user = user;
-                resolve()
+                resolve(this.user)
            
           } else {
             reject()
@@ -220,10 +222,11 @@ export class User {
     
         return new Promise((resolve,reject) => {
           var user =  {
-              'Email' : email,
-              "Tokens": {  
-                'IDDevice': 'B8A86AFB-4890-4E89-A8DE-9B1DB1659634'
-              }
+            'Email' : email
+              // ,
+              // "Tokens": {  
+              //   'IDDevice': 'B8A86AFB-4890-4E89-A8DE-9B1DB1659634'
+              // }
             
           };
           var params =user;// JSON.stringify({user});
@@ -239,7 +242,7 @@ export class User {
             .subscribe(
               data => {            
                 console.log( + data)
-                  resolve();             
+                  resolve(data);             
 
               },
               err => {
@@ -259,7 +262,7 @@ export class User {
         return new Promise((resolve,reject) => {        
     
           var params = userUpdate;
-          console.log(params);
+          
           var headers = new Headers();
           headers.append('Content-Type', 'application/json; charset=utf-8');
         
@@ -283,6 +286,100 @@ export class User {
         
               });
             });
+      }
+
+      getCustomersById(id)
+      {
+        return new Promise((resolve,reject)=>{
+
+          var params ={
+            'Id':id
+          };
+
+          
+          var headers = new Headers();
+          headers.append('Content-Type', 'application/json; charset=utf-8');
+          this.http.post(Constant.GETCUSTOMERS,
+            params, {
+                headers: headers
+            })
+            .map(res => res.json())
+            .subscribe(
+              data => {       
+                  resolve(data);       
+                },
+              err => {                
+                console.log( + err)
+                  reject({message: err });
+              },
+              () => {        
+                return false;
+        
+              });
+            });
+
+
+      }
+
+      ActiveUserFromAdmin(id, isactive)
+      {
+        return new Promise((resolve,reject)=>{
+        var params ={
+          'Id':id,
+          'IsActive':isactive
+        };
+
+        
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json; charset=utf-8');
+        this.http.post(Constant.CONFIRMUSER,
+          params, {
+              headers: headers
+          })
+          .map(res => res.json())
+          .subscribe(
+            data => {       
+                resolve(data);       
+              },
+            err => {                
+              console.log( + err)
+                reject({message: err });
+            },
+            () => {        
+              return false;
+      
+            });
+          });
+        
+      }
+      InvitaCliente(email)
+      {
+          return new Promise((resolve, reject)=>{    
+            debugger;    
+  var params = {
+    'Email':email,
+    'FK_User': this.user.Id
+  };
+  
+              var headers= new Headers();         
+              headers.append('Content-Type','application/json; charset=utf-8');
+             this.http.post(Constant.INVITOUSER,
+              params,
+              {
+                 headers:headers 
+              }
+                 ).map(res=>res.text()).subscribe(data=>{
+                 
+                 resolve(data);
+                 
+             }, err => {
+               console.log( + err)
+               
+               reject({message: err });
+             });
+        
+     });
+  
       }
 
 }

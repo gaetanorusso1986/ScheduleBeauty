@@ -28,16 +28,23 @@ export class ModalPagePage implements OnInit {
  this.modalCtrl.dismiss();
   }
   AnnullaPrenotazione(singleReservation){
+    this.alertUtil.presentConfirmRemove().then((result)=>{
+
+
+   
 this.reservations.RemoveBooking(singleReservation.Id).then((result)=>{
     
   this.alertUtil.presentAlert("Prenotazione annullata correttamente");
   this.modalCtrl.dismiss();
   this.navCtrl.back();
+});
 
 }).catch((err)=>{
-  var errore = JSON.parse(JSON.stringify( err));  
-  console.log(errore.ExceptionMessage);
-  this.alertUtil.presentAlertError(errore.Message);
+ // this.loadingCtrl.dismiss();
+  var errore = JSON.parse(JSON.stringify( err.message));
+
+  console.log(errore._body);
+  this.alertUtil.presentAlertError(errore._body);    
   
   });
 
@@ -45,7 +52,7 @@ this.reservations.RemoveBooking(singleReservation.Id).then((result)=>{
   DetailReservations(id)
   {
   this.reservations.reservationDetail(id).then((result)=>{
-    
+  
     this.resultDetails=result;
     console.log(result);
 

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
-	<ion-toolbar >
+	<ion-toolbar color="reservation">
 		<ion-buttons slot="start" >
-			<ion-menu-button color="dark" autoHide="false"></ion-menu-button>
+			<ion-menu-button autoHide="false"></ion-menu-button>
 		</ion-buttons>
     <ion-title>Registrati</ion-title>
 	</ion-toolbar>
@@ -23,7 +23,7 @@
     </ion-item>
       <ion-item>
         <ion-icon name="person-outline"></ion-icon>
-        <ion-input type="text" [(ngModel)]="userDetails.username" placeholder="Username" autocorrect="off" autocapitalize="none" name="username"></ion-input>
+        <ion-input type="text" [(ngModel)]="userDetails.username" maxlength="10"  placeholder="Username" autocorrect="off" autocapitalize="none" name="username"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -51,9 +51,9 @@
         
         <ion-input type="text" [(ngModel)]="userDetails.vatNumber" placeholder ="Codice Fiscale/P. IVA"  name="vatNumber" maxlength="16"></ion-input>
       </ion-item>
-
+<br />
       <div padding>
-        <ion-button type="submit" expand="block" fill="outline" size="large"  color="dark" >Registra</ion-button>
+        <ion-button type="submit" shape="round"  expand="block"  size="large" color="reservation" >Registra</ion-button>
       </div>
       <div padding style="text-align: center;">
         <p><a (click)="login()">Sei registrato ? Accedi</a>

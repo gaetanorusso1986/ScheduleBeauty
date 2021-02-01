@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
-	<ion-toolbar >
+	<ion-toolbar  color="reservation">
 		<ion-buttons slot="start" >
 			<ion-menu-button autoHide="false"></ion-menu-button>
 		</ion-buttons>
-    <ion-title>Home</ion-title>
+    <ion-title>Cerca il tuo barbiere</ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -13,18 +13,27 @@
   (ionClear)="resetChanges()"
     showcancelbutton="false"
     (ionInput)="filterItems($event)"
+    aria-placeholder="Cerca"
+    title="Cerca"
+    
   ></ion-searchbar>
 
   <ion-list >
-    <ion-button  expand="block" color="dark" fill="outline" size="large" (click)="Details(item.Id)" *ngFor="let item of beautyList">
+    <ion-item *ngFor="let item of beautyList" (click)="Details(item.Id)">
+      <ion-avatar slot="start">
+        <img *ngIf="item.Photo" [src]="display(item.Photo)">
+        <img *ngIf="!item.Photo" src="../../assets/logoBarbiere.png" />
+        
+      </ion-avatar>
       <ion-label >
         <ion-text >
           <h3>{{ item.Name }}</h3>
         </ion-text>
-          <p>{{ item.Indirizzo }} - {{ item.Indirizzo }}</p>
+          <p *ngIf='item.Phone!=null'>{{ item.Indirizzo }} - {{ item.Phone }}</p>
+          <p *ngIf='item.Phone==null'>{{ item.Indirizzo }} </p>
       </ion-label>
-    </ion-button>
-
+      <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+  </ion-item>
   </ion-list>
 
   

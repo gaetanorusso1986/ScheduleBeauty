@@ -79,6 +79,50 @@ const routes: Routes = [
   {
     path: 'update-social',
     loadChildren: () => import('./update-social/update-social.module').then( m => m.UpdateSocialPageModule)
+  },
+  {
+    path: 'create-service',
+    loadChildren: () => import('./create-service/create-service.module').then( m => m.CreateServicePageModule)
+  },
+  {
+    path: 'service',
+    loadChildren: () => import('./service/service.module').then( m => m.ServicePageModule)
+  },
+  {
+    path: 'update-service',
+    loadChildren: () => import('./update-service/update-service.module').then( m => m.UpdateServicePageModule)
+  },
+  {
+    path: 'holidays',
+    loadChildren: () => import('./holidays/holidays.module').then( m => m.HolidaysPageModule)
+  },
+  {
+    path: 'create-holidays',
+    loadChildren: () => import('./create-holidays/create-holidays.module').then( m => m.CreateHolidaysPageModule)
+  },
+  {
+    path: 'prenotazione',
+    loadChildren: () => import('./prenotazione/prenotazione.module').then( m => m.PrenotazionePageModule)
+  },
+  {
+    path: 'service-list',
+    loadChildren: () => import('./service-list/service-list.module').then( m => m.ServiceListPageModule)
+  },
+  {
+    path: 'operator-list',
+    loadChildren: () => import('./operator-list/operator-list.module').then( m => m.OperatorListPageModule)
+  },
+  {
+    path: 'calendar',
+    loadChildren: () => import('./calendar/calendar.module').then( m => m.CalendarPageModule)
+  },
+  {
+    path: 'customers',
+    loadChildren: () => import('./customers/customers.module').then( m => m.CustomersPageModule)
+  },
+  {
+    path: 'invita-clienti',
+    loadChildren: () => import('./invita-clienti/invita-clienti.module').then( m => m.InvitaClientiPageModule)
   }
 ];
 

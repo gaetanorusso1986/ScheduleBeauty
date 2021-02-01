@@ -18,19 +18,19 @@ export class MyprofilePage implements OnInit {
     this.profile=this.navParams.data.value;
   }
   
-
+ 
   update(){
-    debugger;
+ 
   this.user.updateUser(this.profile).then((result) => {
     console.log(result);
   }).catch((err)=>{
-    console.log(err);
+    //this.loadingCtrl.dismiss();
+    var errore = JSON.parse(JSON.stringify( err.message));
+
+   
+   // this.alertUtil.presentAlertError(errore._body);    
   });
-  ///Inserimento dei controlli da effettuare prima di aggiornare l'utente
-  /// creare il servizio 
-  /// inserire il servizio nel constants 
-  /// creare il metodo nel provider
-  ///invocare il metodo
+ 
   }
 
 

@@ -29,7 +29,7 @@ export class Social {
             headers.append('Content-Type', 'application/json; charset=utf-8');
             var params = item;
             console.log(params);
-            this.http.post(Constant.SOCIAL_SERVICE,
+            this.http.post(Constant.SOCIAL,
                 params, {
                     headers: headers
                 })

@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="backPage()">
+			<ion-icon name="chevron-back-outline"></ion-icon>
+		</ion-buttons>
+    <ion-title>Aggiungi un nuovo servizio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+<form (submit)="SaveService()">
+  <ion-list>
+    <ion-item>
+      <ion-label>Seleziona il tipo di servizio</ion-label>
+    <ion-select value="" name="typeService"  [(ngModel)]="createService.typeService" >      
+      <ion-select-option value="Barbiere">Barbiere</ion-select-option>
+      <ion-select-option value="CentroEstetico">Centro Estetico</ion-select-option>      
+      <ion-select-option value="Massaggi">Massaggi</ion-select-option>      
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Seleziona i giorni di chiusura</ion-label>
+  <ion-select value="" multiple="true" name="dayclose"  [(ngModel)]="createService.dayclose" >    
+    <ion-select-option value="1">Lunedì</ion-select-option>
+    <ion-select-option value="2">Martedì</ion-select-option>
+    <ion-select-option value="3">Mercoledì</ion-select-option>
+    <ion-select-option value="4">Giovedì</ion-select-option>
+    <ion-select-option value="5">Venerdì</ion-select-option>
+    <ion-select-option value="6">Sabato</ion-select-option>
+    <ion-select-option value="7">Domenica</ion-select-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+  <ion-label>Seleziona il tempo (min) per ogni prestazione</ion-label>
+  <ion-select value=""  name="rangeTime"  [(ngModel)]="createService.rangeTime" >
+    <ion-select-option value="10">10</ion-select-option>
+    <ion-select-option value="15">15</ion-select-option>
+    <ion-select-option value="20">20</ion-select-option>
+    <ion-select-option value="30">30</ion-select-option>
+    <ion-select-option value="60">60</ion-select-option>
+    </ion-select>
+  </ion-item>
+    <ion-item>
+      <ion-label>Orario apertura </ion-label>
+      <ion-datetime   name="startTime"  [(ngModel)]="createService.startTime"   display-format="HH:mm" picker-format="HH:mm" minuteValues="0,30"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Orario chiusura</ion-label>
+      <ion-datetime name="closeTime"  [(ngModel)]="createService.closeTime" display-format="HH:mm" picker-format="HH:mm" minuteValues="0,30" ></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Numero postazioni</ion-label>
+      <ion-input type="text"  [(ngModel)]="createService.numpostazioni" name="numpostazioni" (keypress)="numberOnlyValidation($event)"></ion-input>
+    </ion-item>
+  <div padding>
+    <ion-button type="submit" expand="block" fill="outline" size="large"  color="dark" >Salva</ion-button>
+  </div>
+</ion-list>
+</form>
+</ion-content>

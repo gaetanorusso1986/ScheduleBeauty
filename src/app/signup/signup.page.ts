@@ -29,8 +29,7 @@ export class SignupPage implements OnInit {
   public userDetails:UserDetails;
   error: any;
   constructor(public navCtrl:NavController, public modalCtrl: ModalController, public user:User, 
-              public loadingCtrl:LoadingService,
-              private alertUtil: AlertUtil,public navParams: NavParams,public route:ActivatedRoute) {
+              public loadingCtrl:LoadingService,              private alertUtil: AlertUtil,public navParams: NavParams,public route:ActivatedRoute) {
                 this.userDetails= new UserDetails();
                }
 
@@ -93,15 +92,11 @@ export class SignupPage implements OnInit {
       this.navCtrl.navigateRoot('/login');
       this.loadingCtrl.dismiss();
     }).catch((err) => { 
-      
-      if (err.message != "") {
-      var errore = JSON.parse(JSON.stringify( err));
-      var message = JSON.parse(errore.message._body);
-      console.log(message.ExceptionMessage);
-      this.alertUtil.presentAlertError(message.ExceptionMessage);
       this.loadingCtrl.dismiss();
-      
-      }            
+      var errore = JSON.parse(JSON.stringify( err.message));
+
+      console.log(errore._body);
+      this.alertUtil.presentAlertError(errore._body);         
     });
     
   }
@@ -120,7 +115,6 @@ export class SignupPage implements OnInit {
     else
       return partitaIVA.test(vatNumber);
   }
-
   
   checkMail(email){    
     var check = /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/;

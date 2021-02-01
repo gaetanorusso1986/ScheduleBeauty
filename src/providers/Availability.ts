@@ -21,7 +21,7 @@ Disponibilita(Service,day){
     var model ={
     
         'day': day,
-        'FK_Service':Service 
+        'Fk_beauty':Service 
     }
 
 var params = JSON.stringify(model);   

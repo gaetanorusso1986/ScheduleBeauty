@@ -42,25 +42,34 @@ if(!details.hasOwnProperty("username") || !details.hasOwnProperty("password")) {
   this.loadingCtrl.dismiss();
   return false;
 }
+// details.username="test@test.it";
+// details.password="b";
+if(!this.checkMail(details.username))
+{    
+  this.loadingCtrl.dismiss();
+  this.alertUtil.presentAlertError("Email non corretta"); 
+   return false;
 
+}
 this.user.login(details.username, details.password).then((result)=>{
 
-  console.log(result);
+  this.loadingCtrl.dismiss();
+ 
   this.user.user=result;
 
   this.event.publish('user:created', result);
 
   this.navCtrl.navigateRoot('home');
-
+  
 }).catch((err)=>{
   
   var errore = JSON.parse(JSON.stringify( err.message));
 
   console.log(errore._body);
   this.alertUtil.presentAlertError(errore._body);
-
+  this.loadingCtrl.dismiss();
 });
-this.loadingCtrl.dismiss();
+
   }
 
   signup() {
@@ -69,5 +78,9 @@ this.loadingCtrl.dismiss();
    recovery() {
     this.navCtrl.navigateRoot("/account-recovery");
    }
+   checkMail(email){    
+    var check = /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/;
+    return check.test(email);
+  }
 
 }

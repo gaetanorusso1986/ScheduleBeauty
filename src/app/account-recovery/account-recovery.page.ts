@@ -31,7 +31,7 @@ export class AccountRecoveryPage implements OnInit {
   ngOnInit() {
   }
    recovery() {
-     
+    this.loadingCtrl.present(); 
     let details = this.userDetails;
     if(!details.hasOwnProperty("email")) {
       this.loadingCtrl.dismiss();
@@ -45,26 +45,25 @@ export class AccountRecoveryPage implements OnInit {
        return false;
   
     }
-    this.loadingCtrl.present();
+    
 
     this.error = null;
-    console.log('register');
-    this.user.recovery(details.email).then((result) => {
-      console.log('result:', result);
-      this.alertUtil.presentAlert("Ti è stata inviata una mail all'indirizzo associato alla tua utenza");
+     this.user.recovery(details.email).then((result) => {
       this.loadingCtrl.dismiss();
-      this.navCtrl.navigateRoot('/login');
+      this.alertUtil.presentAlert("Ti è stata inviata una mail all'indirizzo associato alla tua utenza");
+    
+     // this.navCtrl.navigateRoot('/login');
     }).catch((err) => { 
+      
       if (err.message != "") {
-        //loading.dismiss();
-        this.alertUtil.presentAlertError(err.message);
-        console.log('error', err);
+        this.loadingCtrl.dismiss();
+        this.alertUtil.presentAlertError("Email non presente nei nostri sistemi");   
         
         //this.navCtrl.push(ConfirmPage, { 'username': details.username });
       }
       
     });
-    this.loadingCtrl.dismiss();
+   
   }
 
   back() {

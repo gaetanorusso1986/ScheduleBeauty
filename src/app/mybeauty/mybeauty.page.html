@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="reservation">
     <ion-buttons slot="start" (click)="backPage()">
 			<ion-icon name="chevron-back-outline"></ion-icon>
 		</ion-buttons>
@@ -9,36 +9,55 @@
 
 <ion-content fullscreen="true" slot="fixed">
   <div class="card">
-    <button style="float: right;" (click)="EditProfile(profile)" click-stop-propagation ion-button icon-left clear small >        
-      <div>Modifica</div>
-    </button>
+ 
     <div class="header">
-      <div class="avatar">
-        <img [src]="display(profile.Photo)">
+      <div style="padding: 25px;" *ngIf="profile.Photo">
+         <img width="180" height="180" class="imgstyle" [src]="display(profile.Photo)">        
+        </div>
+      <div style="padding: 25px;" class="imgEmptyStyle" *ngIf="!profile.Photo" >
+        <p>Inserisci una foto della tua attività</p>
       </div>
-      <ion-list>    
+    
+      <form (submit)="update()">
+      <ion-list>   
+        
     <ion-item>
       <ion-icon name="business-outline"></ion-icon>
       <ion-input type="text" [(ngModel)]="profile.Name" placeholder="Nome" autocorrect="off" autocapitalize="none" name="Name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon name="navigate-outline"></ion-icon>
-      <ion-input type="text" [(ngModel)]="profile.Indirizzo" placeholder="Nome" autocorrect="off" autocapitalize="none" name="Indirizzo"></ion-input>     
+      <ion-input type="text" [(ngModel)]="profile.Indirizzo" placeholder="Indirizzo" autocorrect="off" autocapitalize="none" name="Indirizzo"></ion-input>     
     </ion-item>
   <!--<ion-item>
     <ion-icon name="time-outline"></ion-icon>    
    <p>{{profile.OpeningHoursWork }}  -  {{profile.ClosingHoursWork}}</p>   
   </ion-item>-->
-  <ion-item>
-    <ion-icon name="document-text-outline"></ion-icon>
+  <!--<ion-item *ngIf="profile.FiscalCode!=null">
+    <ion-icon name="document-text-outline" ></ion-icon>
    <p>{{profile.FiscalCode }}</p>
-  </ion-item>  
+  </ion-item>  -->
+  <ion-item >
+    <ion-icon name="document-text-outline" ></ion-icon>
+  <ion-input type="text"  [(ngModel)]="profile.FiscalCode" placeholder="Partita Iva" autocorrect="off" autocapitalize="none" name="FiscalCode"></ion-input>     
+</ion-item>
 
   <!--<ion-item *ngIf="profile.Description!=''">
     <p>{{profile.Description }}</p>
   </ion-item>-->
   </ion-list>
-  <div *ngIf="profile.Social?.length > 0" >
+  <div padding>
+    <ion-button *ngIf="profile.Id!=null" type="submit" expand="block" fill="outline" size="large"  color="dark" >Aggiorna</ion-button>
+    <ion-button *ngIf="profile.Id==null" type="submit" expand="block" fill="outline" size="large"  color="dark" >Salva</ion-button>
+  </div>
+</form> 
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="presentActionSheet()">
+    <ion-icon name="camera"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+ <!--<div *ngIf="profile.Social?.length > 0" >
 
     <ion-list>
       <p>I social</p> 
@@ -49,9 +68,7 @@
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-<ion-item>
  
-</ion-item>      
       <ion-item *ngFor="let item of profile.Social">
         <ion-avatar *ngIf="item.Name=='Facebook'" slot="start">
           <img src="../../assets/fb.jpg" />
@@ -64,20 +81,12 @@
         </ion-avatar>
         <ion-input type="text" [(ngModel)]="item.Description" placeholder="Nome" autocorrect="off" autocapitalize="none"></ion-input>     
        <button ion-button (click)="RemoveSocial(item.Id)"> <ion-icon  name="trash"></ion-icon></button>
-      </ion-item>
+      </ion-item> 
     </ion-list>
   
 
-  </div>
-  <div>
-    <ion-button submit >Modifica</ion-button>
-  </div>
-  <div *ngIf="profile.Service?.length > 0" >
-    <ion-button  (click)="DetailsServices(profile.Id)" > 
-      <p> Modifica i servizi </p>
-    </ion-button  >
+  </div>-->
 
-  </div>
  
 </div>
 </div>

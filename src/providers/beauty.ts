@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import * as Constant from '../app/constants';
 import { debugOutputAstAsTypeScript } from '@angular/compiler';
+import { constants } from 'buffer';
 
 
 
@@ -23,7 +24,7 @@ export class Beauty {
     GetAll()
     {   
       
-        return new Promise((resolve, reject)=>{        
+        return new Promise((resolve, reject)=>{       
 
 
                  var headers= new Headers();         
@@ -69,6 +70,50 @@ export class Beauty {
       
    });
 
+    }
+
+    Update(item){
+            
+        var model ={
+        
+            'Id':item.Id,
+            'Name':item.Name,
+            "Description":item.Description,
+            'Indirizzo':item.Indirizzo,
+            'PhotoBase64':item.PhotoBase64,
+            'FiscalCode':item.FiscalCode,
+            'FK_Service':item.FK_Service 
+        }
+
+        let url ;
+        if(item.Id==null)
+        {
+            url=Constant.BEAUTY_SERVICE
+        }
+        else
+        {
+            url=Constant.UPDATEBEAUTY
+        }
+
+        var params = JSON.stringify(model);   
+        return new Promise((resolve, reject)=>{    
+            var headers= new Headers();         
+            headers.append('Content-Type','application/json; charset=utf-8');
+            this.http.post(url,params,{
+            headers:headers
+            }).map(res=>res.json()).subscribe(data=>{
+              
+               resolve(data);
+             
+              
+           }, err => {
+             console.log( + err)
+             
+             reject({message: err });
+           });
+      
+    });
+    
     }
 
 

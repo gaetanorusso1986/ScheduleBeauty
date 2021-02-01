@@ -78,14 +78,11 @@ export class CreateSocialPage implements OnInit {
      this.socialpage.dismiss(this.addsocial.Fk_beauty);
    
     }).catch((err)=>{      
-      if (err.message != "") {
-        var errore = JSON.parse(JSON.stringify( err));
-        var message = JSON.parse(errore.message._body);
-        console.log(message.ExceptionMessage);
-        this.alertUtil.presentAlertError(message.ExceptionMessage);
-        this.loadingCtrl.dismiss();
-        
-        }     
+      this.loadingCtrl.dismiss();
+      var errore = JSON.parse(JSON.stringify( err.message));
+
+      console.log(errore._body);
+      this.alertUtil.presentAlertError(errore._body);      
     });
     
   }

@@ -9,7 +9,9 @@ import {LoadingService} from '../LoadingService';
 import {ActivatedRoute} from '@angular/router';
 import { CalendarComponentOptions } from 'ion2-calendar'
 import * as moment from 'moment';
+import {User} from '../../providers/user';
 import { DomSanitizer } from '@angular/platform-browser';
+
 
 export class beautyDetails {
   Id: string;
@@ -21,6 +23,7 @@ export class beautyDetails {
   Service: any;
   Photo:any;
   displayImage :string;
+  isActive: boolean;
 }
 @Injectable()
 @Component({
@@ -30,122 +33,78 @@ export class beautyDetails {
 })
 export class BeautyDetailsPage implements OnInit {
   public beautyDetail: beautyDetails;
-  public service:string;
-  public dateDisponibilita:string;
-  public resultList:any;
-  date: string;
-  public enabledPrenota=0;
-  public IdEvent:string;
-  buttonValue=0;
-  buttonColor: string = 'secondary';
-  type: 'string'; // 'string' | 'js-date' | 'moment' | 'time' | 'object'
-  optionsRange: CalendarComponentOptions = {
-    color:'primary',
-    pickMode: 'single',
-    monthFormat:'MMM YYYY',
-    weekdays: ['D','L','M','M','G','F','S'],
-    monthPickerFormat:['GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU', 'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC']    
-    
-   
-  };
-  constructor(public navCtrl:NavController, public modalCtrl: ModalController, public beauty:Beauty, 
+  public isActive: boolean;
+  public userID:string;
+
+  constructor(public navCtrl:NavController, public modalCtrl: ModalController, public beauty:Beauty,
     public loadingCtrl:LoadingService, private availability:Availability, public reservations: Reservations,
     private alertUtil: AlertUtil,public navParams: NavParams,public route:ActivatedRoute,
-    private sanitizer: DomSanitizer) { 
-      moment.locale('it-it');
+    private sanitizer: DomSanitizer,public user:User)
+  {
+
+   
     }
 
   ngOnInit() {
-        this.beautyDetail= new beautyDetails();
+   this.beautyDetail= new beautyDetails();
+   
+   this.isActive=JSON.parse (this.route.snapshot.paramMap.get('active'));
+    this.Details(this.route.snapshot.paramMap.get('id'));
+    this.userID=this.route.snapshot.paramMap.get('idUser')
+    
+    
+    }
  
 
-    this.Details(this.route.snapshot.paramMap.get('id'))
-    
-  }
-  onChange($event) {
-    this.date=($event).format('DD-MM-YYYY');
-    console.log(($event).format('DD-MM-YYYY')); 
-  }
-
-  Details(id)
-{
-  this.beauty.GetDetails(id).then((result:beautyDetails)=>{
-    
+  Details(id){
+    this.loadingCtrl.present();
+    this.beauty.GetDetails(id).then((result:beautyDetails)=>{
+      this.loadingCtrl.dismiss();
       this.beautyDetail=result;
+      this.beautyDetail.isActive=this.isActive;
+      
       if(this.beautyDetail.Photo!=null)
       {
         var imageData = btoa(this.beautyDetail.Photo);
-        //console.log("Base64 Image: ",imageData);
-       // this.beautyDetail.displayImage = this.sanitizer.bypassSecurityTrustUrl("data:image/*;base64,"+imageData);
-
       }
-    console.log(result);
-
    }).catch((err)=>{
-  
-    if(err!=null)
-    {
-    var errore = JSON.parse(JSON.stringify( err));
-  
-    console.log(errore.ExceptionMessage);
-    this.alertUtil.presentAlertError(errore.Message);
-    }
-  
+    this.loadingCtrl.dismiss();
+    var errore = JSON.parse(JSON.stringify( err.message));
+    this.alertUtil.presentAlertError(errore._body);  
   });
 }
 
-addEvent(Id, event){
-  debugger;
-  this.buttonValue = Id;
-  this.IdEvent=event.target.value;
-  this.enabledPrenota=1;
-  
-  }
 
-VerficaDisponibilita(){
-  this.resultList=null;
-  
-  this.enabledPrenota=0;
-  var service = this.service;//'77aa8213-05c7-46fd-9871-a6b1a59eb5a9';
-  var date= this.date;
-  this.availability.Disponibilita(service,date).then((result)=>{
-    
-    //Svuoteare la grid ogni volta
-    this.resultList=result;
 
- }).catch((err)=>{
 
-  var errore = JSON.parse(JSON.stringify( err));
-
-  console.log(errore.ExceptionMessage);
-  this.alertUtil.presentAlertError(errore.Message);
-
-});
-
-}
 display(b64: string) {
   return this.sanitizer.bypassSecurityTrustUrl("data:image/*;base64," + b64);
 }
-Prenota()
+Update()
 {
-  this.resultList=null;
-alert(this.availability.device.uuid);
-this.reservations.AddPrenotazione(this.date, this.IdEvent,this.availability.device.uuid,'').then((result)=>{
+  this.loadingCtrl.present();
+  this.user.ActiveUserFromAdmin(this.userID,this.isActive).then((result)=>{
+    this.loadingCtrl.dismiss();
+    this.alertUtil.presentAlert("Operazione avvenuto correttamente").then(()=>{
+      this.navCtrl.navigateRoot("customers");
+      
+    });
     
-  //il customer da inserire nei parametri si riferisce all'utente loggato
-  this.alertUtil.presentAlert("Prenotazione avvenuta con successo");
-  this.enabledPrenota=0;
 
-}).catch((err)=>{
+  }).catch((err)=>{
+    this.loadingCtrl.dismiss();
+    var errore = JSON.parse(JSON.stringify( err.message));
+    this.alertUtil.presentAlertError(errore._body);  
+  });
+}
+numberOnlyValidation(event: any) {
+  const pattern = /[0-9.,]/;
+  let inputChar = String.fromCharCode(event.charCode);
 
-var errore = JSON.parse(JSON.stringify( err));
-
-console.log(errore.ExceptionMessage);
-this.alertUtil.presentAlertError(errore.Message);
-
-});   
-
-
+  if (!pattern.test(inputChar)) {
+    // invalid character, prevent input
+    event.preventDefault();
+  }
 }
 
 }

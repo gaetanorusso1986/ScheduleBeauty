@@ -1,7 +1,7 @@
 <ion-header>
-	<ion-toolbar >
+	<ion-toolbar color="reservation">
 		<ion-buttons slot="start" >
-			<ion-menu-button color="dark" autoHide="false"></ion-menu-button>
+			<ion-menu-button  autoHide="false"></ion-menu-button>
 		</ion-buttons>
     <ion-title>Accedi</ion-title>
 	</ion-toolbar>
@@ -9,22 +9,23 @@
 
 <ion-content>
   <form (submit)="login()">
+    <br/>
     <ion-list>
 <ion-item>
   <ion-icon name="person-outline"></ion-icon>  
-  <ion-input [(ngModel)]="loginDetails.username" placeholder="Email"  type="text" autocorrect="off" name="username">
+  <ion-input [(ngModel)]="loginDetails.username" placeholder="Email"  pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"  type="email" autocorrect="off" name="username">
      
   </ion-input>
 </ion-item>
 <ion-item>
   <ion-icon name="key-outline"></ion-icon>
-  <ion-input type="password" [(ngModel)]="loginDetails.password" placeholder="Password" autocorrect="off" name="password"> 
-     
+  <ion-input type="password"  [(ngModel)]="loginDetails.password" placeholder="Password" autocorrect="off" name="password"> 
+    
   </ion-input>
 </ion-item>
-
+<br/>
 <div padding  style="text-align: center;">
-  <ion-button type="submit" expand="block" fill="outline" size="large"  color="dark">Login</ion-button>
+  <ion-button type="submit" expand="block" shape="round"  size="large"  color="reservation">Login</ion-button>
 </div>
     </ion-list>
     <div padding  style="text-align: center;" >
